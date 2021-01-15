@@ -1,0 +1,9 @@
+.profile__name-box {
+    margin: 0 auto 0;
+}
+
+@media screen and (min-width: 1000px) {
+    .profile__name-box {
+        margin: 0;
+    }
+}

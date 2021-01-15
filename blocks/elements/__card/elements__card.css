@@ -1,0 +1,7 @@
+.elements__card {
+    text-decoration: none;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 282px;
+}

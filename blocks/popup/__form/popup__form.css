@@ -1,0 +1,16 @@
+.popup__form {
+    display: block;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0 0 10px;
+    margin: 0 0 30px;
+    outline-color: #097ce7b2;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    width: 100%;
+}
+
+.popup__form::placeholder {
+    color: black;
+}

@@ -1,0 +1,19 @@
+.popup {
+    margin-top: 123px;
+    position: fixed;
+    background-color: white;
+    width: 282px;
+    height: 322px;
+    border-radius: 10px;
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 1000px) {
+    .popup {
+        margin-top: 195px;
+        width: 430px;
+        height: 330px;
+    }
+}

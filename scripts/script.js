@@ -1,7 +1,6 @@
 let editButton = document.querySelector(".profile__edit-button")
 let popup = document.querySelector(".popup")
 let exitButton = document.querySelector(".popup__exit")
-let saveButton = document.querySelector(".popup__save-button")
 let travelerName = document.querySelector(".profile__name")
 let travelerProfession = document.querySelector(".profile__profession")
 let travelerNameEdit = document.querySelector(".popup__form_input_name")

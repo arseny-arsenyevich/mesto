@@ -1,17 +1,24 @@
 let editButton = document.querySelector(".profile__edit-button")
-let overlay = document.querySelector(".overlay")
+let popup = document.querySelector(".popup")
 let exitButton = document.querySelector(".popup__exit")
 let saveButton = document.querySelector(".popup__save-button")
 let travelerName = document.querySelector(".profile__name")
 let travelerProfession = document.querySelector(".profile__profession")
 let travelerNameEdit = document.querySelector(".popup__form_input_name")
 let travelerProfessionEdit = document.querySelector(".popup__form_input_profession")
+let formEditElement = document.querySelector(".popup__forms")
 
-travelerNameEdit.value = travelerName.textContent
-travelerProfessionEdit.value = travelerProfession.textContent
+
+let saveName = () => {
+    travelerNameEdit.value = travelerName.textContent
+}
+
+let saveProfession = () => {
+    travelerProfessionEdit.value = travelerProfession.textContent
+}
 
 let togglePopup = () => {
-    overlay.classList.toggle("overlay_active")
+    popup.classList.toggle("popup_opened")
 }
 
 let editName = () => {
@@ -22,17 +29,24 @@ let editProfession = () => {
     travelerProfession.textContent = travelerProfessionEdit.value
 }
 
-editButton.addEventListener("click", togglePopup)
+function handleFormSubmit (evt) {
+    evt.preventDefault();
+    editProfession();
+    editName();
+    togglePopup();
+}
 
-exitButton.addEventListener("click", togglePopup)
-
-saveButton.addEventListener("click", () => {
-    editProfession()
-    editName()
+editButton.addEventListener("click", () => { 
+    saveName()
+    saveProfession()
     togglePopup()
 })
 
-overlay.addEventListener("click", (event) =>{
+exitButton.addEventListener("click", togglePopup)
+
+formEditElement.addEventListener("submit", handleFormSubmit)
+
+popup.addEventListener("click", (event) =>{
     if (event.target === event.currentTarget)
         togglePopup()
 })

@@ -3,8 +3,14 @@
     top: -51px;
     left: 245px;
     height: 37px;
+    width: 37px;
     cursor: pointer;
     transition: opacity 1s ease;
+    background-image: url("../../../images/Close_Icon.svg");
+    border: 0;
+    background-color: transparent;
+    background-size: contain;
+
 }
 
 .popup__exit:hover {
@@ -16,5 +22,6 @@
         top: -47px;
         left: 423px;
         height: 54px;
+        width: 54px;
     }
 }

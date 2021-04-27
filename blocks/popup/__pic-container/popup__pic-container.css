@@ -1,0 +1,8 @@
+.popup__pic-container {
+    border: 0;
+    background-color: transparent;
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    margin: 0 40px 0;
+}

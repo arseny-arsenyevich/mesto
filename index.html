@@ -28,49 +28,9 @@
             </section>
 
             <section class="elements" aria-label="места">
+                <p class="elements__empty">Добавьте картинки</p>
                 <ul class="elements__table">
-                    <li class="elements__card">
-                        <img class="elements__picture" src="images/karach.jpg" alt="пейзаж">
-                        <div class="elements__text-area">
-                            <h2 class="elements__title">Карачаево-Черкесия</h2>
-                            <button class="elements__like-button" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__card">
-                        <img class="elements__picture" src="images/gora.jpg" alt="пейзаж">
-                        <div class="elements__text-area">
-                            <h2 class="elements__title">Гора Эльбрус</h2>
-                            <button class="elements__like-button" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__card">
-                        <img class="elements__picture" src="images/dombay.jpg" alt="пейзаж">
-                        <div class="elements__text-area">
-                            <h2 class="elements__title">Домбай</h2>
-                            <button class="elements__like-button" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__card">
-                        <img class="elements__picture" src="images/gora.jpg" alt="пейзаж">
-                        <div class="elements__text-area">
-                            <h2 class="elements__title">Гора Эльбрус</h2>
-                            <button class="elements__like-button" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__card">
-                        <img class="elements__picture" src="images/dombay.jpg" alt="пейзаж">
-                        <div class="elements__text-area">
-                            <h2 class="elements__title">Домбай</h2>
-                            <button class="elements__like-button" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="elements__card">
-                        <img class="elements__picture" src="images/karach.jpg" alt="пейзаж">
-                        <div class="elements__text-area">
-                            <h2 class="elements__title">Карачаево-Черкесия</h2>
-                            <button class="elements__like-button" type="button"></button>
-                        </div>
-                    </li>
+                    
                 </ul>
             </section>
         </main>
@@ -79,20 +39,58 @@
             <p class="footer__copy">&copy; 2020 Mesto Russia</p>
         </footer>
 
-        <section class="popup">
-            <div class="popup__container popup__container_position_center">
-                <button class="popup__exit" type="button"></button>
-                <h2 class="popup__heading">Редактировать профиль</h2>
-                <form class="popup__forms" name="forms">
-                    <fieldset class="popup__input-container">
-                        <input type="text" class="popup__form popup__form_input_name" name="form-name" placeholder="Имя" required>
-                        <input type="text" class="popup__form popup__form_input_profession" name="form-profession" placeholder="О себе" required>
-                    </fieldset>
-                    <button type="submit" class="popup__save-button">Сохранить</button>
-                </form>
+        <section class="popups" aria-label="всплывающие окна">
+            <div class="popup popup_content_name">
+                <div class="popup__container popup__container_position_center">
+                    <button class="popup__exit popup__exit_content_name" type="button"></button>
+                    <h2 class="popup__heading">Редактировать профиль</h2>
+                    <form class="popup__forms popup__forms_content_name" name="forms">
+                        <fieldset class="popup__input-container">
+                            <input type="text" class="popup__form popup__form_input_name" name="form-name" placeholder="Имя" required>
+                            <input type="text" class="popup__form popup__form_input_profession" name="form-profession" placeholder="О себе" required>
+                        </fieldset>
+                        <button type="submit" class="popup__save-button popup__save-button_content_name">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="popup popup_content_card">
+                <div class="popup__container popup__container_position_center">
+                    <button class="popup__exit popup__exit_content_card" type="button"></button>
+                    <h2 class="popup__heading">Новое место</h2>
+                    <form class="popup__forms popup__forms_content_card" name="forms">
+                        <fieldset class="popup__input-container">
+                            <input type="text" class="popup__form popup__form_input_place" name="form-place" placeholder="Название" required>
+                            <input type="text" class="popup__form popup__form_input_link" name="form-link" placeholder="Ссылка на картинку" required>
+                        </fieldset>
+                        <button type="submit" class="popup__save-button popup__save-button_content_card">Создать</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="popup popup_content_picture">
+                <div class="popup__pic-container">
+                    <button class="popup__exit popup__exit_content_picture" type="button"></button>
+                    <img class="popup__picture">
+                     <p class="popup__picture-title"></p>
+                 </div>
             </div>
         </section>
     </div>
+
+    <template id="elements__template">
+        <li class="elements__card">
+            <button class="elements__trash"></button>
+            <div class="elements__background">
+                <img class="elements__picture" src="images/traveler.jpg" alt="пейзаж">
+            </div>
+            <div class="elements__text-area">
+                <h2 class="elements__title">sfafasfsf</h2>
+                <button class="elements__like-button" type="button"></button>
+            </div>
+        </li>
+    </template> 
+    
     <script src="scripts/script.js"></script>
 </body>
 </html>

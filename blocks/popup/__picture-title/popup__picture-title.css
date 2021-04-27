@@ -1,0 +1,16 @@
+.popup__picture-title {
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0;
+    padding: 10px 0;
+    font-weight: 400;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 700px) {
+    .popup__picture-title {
+        max-width: 40vw;
+    }
+}

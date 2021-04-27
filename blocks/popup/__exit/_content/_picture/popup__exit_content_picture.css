@@ -1,0 +1,11 @@
+.popup__exit_content_picture {
+    right: 0px;
+    left: auto;
+}
+
+@media screen and (min-width: 1000px) {
+    .popup__exit_content_picture {
+        top: -47px;
+        right: -47px;
+    }
+}

@@ -1,13 +1,12 @@
 const editButton = document.querySelector(".profile__edit-button")
 const addButton = document.querySelector(".profile__add-button")
+const popups = document.querySelectorAll(".popup")
 const popupName = document.querySelector(".popup_content_name")
 const popupCard = document.querySelector(".popup_content_card")
 const popupPicContainer = document.querySelector(".popup_content_picture")
 const popupPicture = popupPicContainer.querySelector(".popup__picture")
 const popupPictureTitle = popupPicContainer.querySelector(".popup__picture-title")
-const exitButtonName = document.querySelector(".popup__exit_content_name")
-const exitButtonCard = document.querySelector(".popup__exit_content_card")
-const exitButtonPicture = document.querySelector(".popup__exit_content_picture")
+const exitButton = document.querySelectorAll(".popup__exit")
 const travelerName = document.querySelector(".profile__name")
 const travelerProfession = document.querySelector(".profile__profession")
 const travelerNameEdit = document.querySelector(".popup__form_input_name")
@@ -47,26 +46,21 @@ const initialCards = [
     }    
 ]
 
-
-const togglePopupName = () => {
-  popupName.classList.toggle("popup_opened")
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
-const togglePopupCard = () => {
-  popupCard.classList.toggle("popup_opened")
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 }
 
-const togglePopupPicture = () => {
-  popupPicContainer.classList.toggle("popup_opened")
-}
+exitButton.forEach((button) => button.addEventListener("click", (evt) => closePopup(evt.target.closest(".popup"))))
 
 const emptyTable = () => {
-  console.log("dobavil")
         emptyTitle.classList.add("elements__empty_active")
 }
 
 const filledTable = () => {
-  console.log("ubral")
         emptyTitle.classList.remove("elements__empty_active")
 }
 
@@ -74,12 +68,12 @@ const addCard = (link,name) => {
         const template = document.querySelector("#elements__template").content
         const cardElement = template.querySelector(".elements__card").cloneNode(true)
         cardElement.querySelector(".elements__picture").src = link
+        cardElement.querySelector(".elements__picture").alt = name
         cardElement.querySelector(".elements__title").textContent = name
         const likeButton = cardElement.querySelector(".elements__like-button")
         likeButton.addEventListener("click", (evt) => {
           evt.target.classList.toggle("elements__like-button_active")
         })
-        elementsTable.prepend(cardElement)
         const deleteButton = cardElement.querySelector(".elements__trash")
         deleteButton.addEventListener("click", (evt) => {
             const listItem = evt.target.closest(".elements__card")
@@ -92,13 +86,14 @@ const addCard = (link,name) => {
         cardPicture.addEventListener("click", (evt) => {
           popupPicture.src = link
           popupPictureTitle.textContent = name
-          togglePopupPicture()
+          openPopup(popupPicContainer)
         }) 
+        return cardElement
 }
 
 const fillPage = () => {
     initialCards.forEach((card) => {
-        addCard(card.link, card.name)
+        elementsTable.prepend(addCard(card.link, card.name))
     })
 }
 
@@ -120,56 +115,50 @@ const editProfession = () => {
 
 
 
-function handleFormSubmit (evt) {
+function handleFormName (evt) {
     evt.preventDefault();
     editProfession();
     editName();
-    togglePopupName();
+    closePopup(popupName);
 }
 
 editButton.addEventListener("click", () => { 
     saveName()
     saveProfession()
-    togglePopupName()
+    openPopup(popupName)
 })
 
 
 
 addButton.addEventListener("click", () => {
-    togglePopupCard()
+    openPopup(popupCard)
 })
 
-exitButtonName.addEventListener("click", togglePopupName)
-
-exitButtonCard.addEventListener("click", togglePopupCard)
-
-exitButtonPicture.addEventListener("click", togglePopupPicture)
-
-formEditElementName.addEventListener("submit", handleFormSubmit)
+formEditElementName.addEventListener("submit", handleFormName)
 
 formAddCard.addEventListener("submit", (evt) => {
   evt.preventDefault()
-  addCard(cardLink.value, cardPlace.value)
+  elementsTable.prepend(addCard(cardLink.value, cardPlace.value))
   cardLink.value = ""
   cardPlace.value = ""
   filledTable()
   togglePopupCard()
 })
 
-popupName.addEventListener("click", (event) =>{
+popups.forEach((popup) => {popup.addEventListener("click", (event) =>{
     if (event.target === event.currentTarget)
-        togglePopupName()
-})
+        closePopup(event.target.closest(".popup"))
+})})
 
-popupCard.addEventListener("click", (event) =>{
-  if (event.target === event.currentTarget)
-      togglePopupCard()
-})
+// popupCard.addEventListener("click", (event) =>{
+//   if (event.target === event.currentTarget)
+//       togglePopupCard()
+// })
 
-popupPicContainer.addEventListener("click", (event) =>{
-  if (event.target === event.currentTarget)
-      togglePopupPicture()
-})
+// popupPicContainer.addEventListener("click", (event) =>{
+//   if (event.target === event.currentTarget)
+//       togglePopupPicture()
+// })
 
 fillPage()
 

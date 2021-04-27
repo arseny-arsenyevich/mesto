@@ -6,7 +6,7 @@ const popupCard = document.querySelector(".popup_content_card")
 const popupPicContainer = document.querySelector(".popup_content_picture")
 const popupPicture = popupPicContainer.querySelector(".popup__picture")
 const popupPictureTitle = popupPicContainer.querySelector(".popup__picture-title")
-const exitButton = document.querySelectorAll(".popup__exit")
+const exitButtonList = document.querySelectorAll(".popup__exit")
 const travelerName = document.querySelector(".profile__name")
 const travelerProfession = document.querySelector(".profile__profession")
 const travelerNameEdit = document.querySelector(".popup__form_input_name")
@@ -54,7 +54,7 @@ function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
 
-exitButton.forEach((button) => button.addEventListener("click", (evt) => closePopup(evt.target.closest(".popup"))))
+exitButtonList.forEach((button) => button.addEventListener("click", (evt) => closePopup(evt.target.closest(".popup"))))
 
 const emptyTable = () => {
         emptyTitle.classList.add("elements__empty_active")
@@ -142,7 +142,7 @@ formAddCard.addEventListener("submit", (evt) => {
   cardLink.value = ""
   cardPlace.value = ""
   filledTable()
-  togglePopupCard()
+  closePopup(popupCard)
 })
 
 popups.forEach((popup) => {popup.addEventListener("click", (event) =>{

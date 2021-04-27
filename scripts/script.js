@@ -150,16 +150,6 @@ popups.forEach((popup) => {popup.addEventListener("click", (event) =>{
         closePopup(event.target.closest(".popup"))
 })})
 
-// popupCard.addEventListener("click", (event) =>{
-//   if (event.target === event.currentTarget)
-//       togglePopupCard()
-// })
-
-// popupPicContainer.addEventListener("click", (event) =>{
-//   if (event.target === event.currentTarget)
-//       togglePopupPicture()
-// })
-
 fillPage()
 
 console.log("her")

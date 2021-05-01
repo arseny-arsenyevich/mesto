@@ -1,12 +1,12 @@
 const editButton = document.querySelector(".profile__edit-button")
 const addButton = document.querySelector(".profile__add-button")
-const popups = document.querySelectorAll(".popup")
+const popups = Array.from(document.querySelectorAll(".popup"))
 const popupName = document.querySelector(".popup_content_name")
 const popupCard = document.querySelector(".popup_content_card")
 const popupPicContainer = document.querySelector(".popup_content_picture")
 const popupPicture = popupPicContainer.querySelector(".popup__picture")
 const popupPictureTitle = popupPicContainer.querySelector(".popup__picture-title")
-const exitButtonList = document.querySelectorAll(".popup__exit")
+const exitButtonList = Array.from(document.querySelectorAll(".popup__exit"))
 const travelerName = document.querySelector(".profile__name")
 const travelerProfession = document.querySelector(".profile__profession")
 const travelerNameEdit = document.querySelector(".popup__form_input_name")
@@ -150,6 +150,11 @@ popups.forEach((popup) => {popup.addEventListener("click", (event) =>{
         closePopup(event.target.closest(".popup"))
 })})
 
-fillPage()
 
-console.log("her")
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      popups.forEach((popup) => {closePopup(popup)})
+    }
+})
+
+fillPage()

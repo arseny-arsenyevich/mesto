@@ -4,7 +4,7 @@
     line-height: 17px;
     text-align: center;
     padding: 13px 81px;
-    margin: 14px auto 0;
+    margin: 44px auto 0;
     transition: opacity 1s ease;
     background-color: black;
     border: 0;
@@ -16,7 +16,7 @@
 
 @media screen and (min-width: 1000px) {
     .popup__save-button {
-        margin-top: 18px;
+        margin-top: 48px;
         font-size: 18px;
         line-height: 22px;
         padding: 13px 132px;

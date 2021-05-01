@@ -3,19 +3,18 @@
     width: 18px;
     cursor: pointer;
     transition: opacity 1s ease;
-    margin-bottom: 13px;
+    margin: 9px 0 0;
     background-image: url("../../../images/Edit_Button.svg");
     background-color: transparent;
     background-size: cover;
     border: black;
-    display: inline-flex;
 }
 
 @media screen and (min-width: 1000px) {
     .profile__edit-button {
         height: 24px;
         width: 24px;
-        margin-bottom: 12px;
+        margin: 14px 0 0;
     }
 }
 

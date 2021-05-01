@@ -46,8 +46,14 @@
                     <h2 class="popup__heading">Редактировать профиль</h2>
                     <form class="popup__forms popup__forms_content_name" name="forms">
                         <fieldset class="popup__input-container">
-                            <input type="email" class="popup__form popup__form_input_name" name="form-name" placeholder="Имя" required minlength="2" maxlength="40">
-                            <input type="text" class="popup__form popup__form_input_profession" name="form-profession" placeholder="О себе" required minlength="2" maxlength="200">
+                            <label class="popup__field">
+                                <input type="email" class="popup__form popup__form_input_name" name="form-name" id="form-name" placeholder="Имя" required minlength="2" maxlength="40">
+                                <span class="popup__error popup__error_type_form-name"></span>
+                            </label>
+                            <label class="popup__field">
+                                <input type="text" class="popup__form popup__form_input_profession" name="form-profession" id="form-profession" placeholder="О себе" required minlength="2" maxlength="200">
+                                <span class="popup__error popup__error_type_form-profession"></span>
+                            </label>
                         </fieldset>
                         <button type="submit" class="popup__save-button popup__save-button_content_name">Сохранить</button>
                     </form>
@@ -60,8 +66,14 @@
                     <h2 class="popup__heading">Новое место</h2>
                     <form class="popup__forms popup__forms_content_card" name="forms">
                         <fieldset class="popup__input-container">
-                            <input type="text" class="popup__form popup__form_input_place" name="form-place" placeholder="Название" required minlength="2" maxlength="30">
-                            <input type="url" class="popup__form popup__form_input_link" name="form-link" placeholder="Ссылка на картинку" required>
+                            <label class="popup__field">
+                                <input type="text" class="popup__form popup__form_input_place" name="form-place" id="form-place" placeholder="Название" required minlength="2" maxlength="30">
+                                <span class="popup__error popup__error_type_form-place"></span>
+                            </label>
+                            <label class="popup__field">
+                                <input type="url" class="popup__form popup__form_input_link" name="form-link" id="form-link" placeholder="Ссылка на картинку" required>
+                                <span class="popup__error popup__error_type_form-link"></span>
+                            </label>
                         </fieldset>
                         <button type="submit" class="popup__save-button popup__save-button_content_card">Создать</button>
                     </form>

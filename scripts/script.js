@@ -18,40 +18,42 @@ const formAddCard = document.querySelector(".popup__forms_content_card")
 const elementsTable = document.querySelector(".elements__table")
 const emptyTitle = document.querySelector(".elements__empty")
 
+const popupSaveCardButton = popupCard.querySelector(".popup__save-button_content_card")
+
 
 const initialCards = [
     {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+      name: "Байкал",
+      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
     },
     {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+      name: "Холмогорский район",
+      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg"
     },
     {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+      name: "Камчатка",
+      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg"
     },
     {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+      name: "Иваново",
+      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg"
     },
     {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+      name: "Челябинская область",
+      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg"
     },
     {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+      name: "Архыз",
+      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
     }    
 ]
 
 function closePopup(popup) {
-  popup.classList.remove('popup_opened');
+  popup.classList.remove("popup_opened");
 }
 
 function openPopup(popup) {
-  popup.classList.add('popup_opened');
+  popup.classList.add("popup_opened");
 }
 
 exitButtonList.forEach((button) => button.addEventListener("click", (evt) => closePopup(evt.target.closest(".popup"))))
@@ -122,17 +124,11 @@ function handleFormName (evt) {
     closePopup(popupName);
 }
 
-editButton.addEventListener("click", () => { 
-    saveName()
-    saveProfession()
-    openPopup(popupName)
-})
 
 
 
-addButton.addEventListener("click", () => {
-    openPopup(popupCard)
-})
+
+
 
 formEditElementName.addEventListener("submit", handleFormName)
 
@@ -157,4 +153,76 @@ document.addEventListener("keydown", (event) => {
     }
 })
 
+//скрипты скатал из тренажера, надеюсь это не считается за плагиат))
+
+const showInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.popup__error_type_${inputElement.id}`)
+  inputElement.classList.add("popup__form_invalid")
+  errorElement.classList.add("popup__error_active")
+  errorElement.textContent = inputElement.validationMessage
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.popup__error_type_${inputElement.id}`)
+  inputElement.classList.remove("popup__form_invalid")
+  errorElement.classList.remove("popup__error_active")
+  errorElement.textContent = ""
+};
+
+function hasInvalidInput(inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid
+  }); 
+}
+
+function toggleButtonState(inputList, buttonElement) {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add("popup__save-button_inactive")
+  } else {
+    buttonElement.classList.remove("popup__save-button_inactive")
+  }
+}
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement)
+  } else {
+    hideInputError(formElement, inputElement)
+  }
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(".popup__form"))
+  const buttonElement = formElement.querySelector(".popup__save-button")
+  // toggleButtonState(inputList, buttonElement)
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", function () {
+      checkInputValidity(formElement, inputElement, inputElement.validationMessage)
+      toggleButtonState(inputList, buttonElement)
+    });
+  });
+};
+
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll(".popup__forms"))
+  formList.forEach((formElement) => {
+    setEventListeners(formElement)
+  })
+}
+
+editButton.addEventListener("click", () => { 
+  saveName()
+  saveProfession()
+  openPopup(popupName)
+})
+
+addButton.addEventListener("click", () => {
+  toggleButtonState(Array.from(popupCard.querySelectorAll(".popup__form")), popupSaveCardButton)
+  openPopup(popupCard)
+})
+
+enableValidation()
+
 fillPage()
+

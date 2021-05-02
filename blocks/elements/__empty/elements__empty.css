@@ -1,6 +1,7 @@
 .elements__empty {
     text-align: center;
-    margin: 20px;
+    margin: 20px auto;
+    vertical-align: middle;
     color: white;
     font-weight: 900;
     font-size: 40px;
@@ -16,5 +17,6 @@
 @media screen and (min-width: 900px) {
     .elements__empty {
         margin: 200px 20px;
+        font-size: 60px;
     }
 }

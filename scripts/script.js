@@ -52,8 +52,6 @@ function openPopup(popup) {
   popup.classList.add("popup_opened");
 }
 
-//exitButtonList.forEach((button) => button.addEventListener("click", (evt) => closePopup(evt.target.closest(".popup"))))
-
 const emptyTable = () => {
         emptyTitle.classList.add("elements__empty_active")
 }

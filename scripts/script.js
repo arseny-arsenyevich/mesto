@@ -6,7 +6,6 @@ const popupCard = document.querySelector(".popup_content_card")
 const popupPicContainer = document.querySelector(".popup_content_picture")
 const popupPicture = popupPicContainer.querySelector(".popup__picture")
 const popupPictureTitle = popupPicContainer.querySelector(".popup__picture-title")
-const exitButtonList = Array.from(document.querySelectorAll(".popup__exit"))
 const travelerName = document.querySelector(".profile__name")
 const travelerProfession = document.querySelector(".profile__profession")
 const travelerNameEdit = document.querySelector(".popup__form_input_name")
@@ -17,9 +16,6 @@ const formEditElementName = document.querySelector(".popup__forms_content_name")
 const formAddCard = document.querySelector(".popup__forms_content_card")
 const elementsTable = document.querySelector(".elements__table")
 const emptyTitle = document.querySelector(".elements__empty")
-
-const popupSaveCardButton = popupCard.querySelector(".popup__save-button_content_card")
-
 
 const initialCards = [
     {
@@ -56,7 +52,7 @@ function openPopup(popup) {
   popup.classList.add("popup_opened");
 }
 
-exitButtonList.forEach((button) => button.addEventListener("click", (evt) => closePopup(evt.target.closest(".popup"))))
+//exitButtonList.forEach((button) => button.addEventListener("click", (evt) => closePopup(evt.target.closest(".popup"))))
 
 const emptyTable = () => {
         emptyTitle.classList.add("elements__empty_active")
@@ -72,18 +68,6 @@ const addCard = (link,name) => {
         cardElement.querySelector(".elements__picture").src = link
         cardElement.querySelector(".elements__picture").alt = name
         cardElement.querySelector(".elements__title").textContent = name
-        const likeButton = cardElement.querySelector(".elements__like-button")
-        likeButton.addEventListener("click", (evt) => {
-          evt.target.classList.toggle("elements__like-button_active")
-        })
-        const deleteButton = cardElement.querySelector(".elements__trash")
-        deleteButton.addEventListener("click", (evt) => {
-            const listItem = evt.target.closest(".elements__card")
-            listItem.remove()
-            if (document.querySelectorAll(".elements__title").length === 0) {
-              emptyTable()
-            }
-        })
         const cardPicture = cardElement.querySelector(".elements__picture")
         cardPicture.addEventListener("click", (evt) => {
           popupPicture.src = link
@@ -92,6 +76,19 @@ const addCard = (link,name) => {
         }) 
         return cardElement
 }
+
+elementsTable.addEventListener("click", (evt) =>{
+  if (evt.target.classList.contains("elements__like-button")) {
+      evt.target.classList.toggle("elements__like-button_active")
+  }
+  if (evt.target.classList.contains("elements__trash")) {
+      const cardItem = evt.target.closest(".elements__card")
+      cardItem.remove()
+      if (document.querySelectorAll(".elements__title").length === 0) {
+          emptyTable()
+      }
+  }
+})
 
 const fillPage = () => {
     initialCards.forEach((card) => {
@@ -115,8 +112,6 @@ const editProfession = () => {
     travelerProfession.textContent = travelerProfessionEdit.value
 }
 
-
-
 function handleFormName (evt) {
     evt.preventDefault();
     editProfession();
@@ -124,11 +119,15 @@ function handleFormName (evt) {
     closePopup(popupName);
 }
 
+editButton.addEventListener("click", () => { 
+  saveName()
+  saveProfession()
+  openPopup(popupName)
+})
 
-
-
-
-
+addButton.addEventListener("click", () => {
+  openPopup(popupCard)
+})
 
 formEditElementName.addEventListener("submit", handleFormName)
 
@@ -141,14 +140,15 @@ formAddCard.addEventListener("submit", (evt) => {
   closePopup(popupCard)
 })
 
-popups.forEach((popup) => {popup.addEventListener("click", (event) =>{
-    if (event.target === event.currentTarget)
-        closePopup(event.target.closest(".popup"))
+popups.forEach((popup) => {popup.addEventListener("click", (evt) =>{
+    if (evt.target === evt.currentTarget || evt.target.classList.contains("popup__exit")) {
+        closePopup(evt.target.closest(".popup"))
+    }
 })})
 
 
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
+document.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") {
       popups.forEach((popup) => {closePopup(popup)})
     }
 })
@@ -194,7 +194,7 @@ const checkInputValidity = (formElement, inputElement) => {
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll(".popup__form"))
   const buttonElement = formElement.querySelector(".popup__save-button")
-  // toggleButtonState(inputList, buttonElement)
+  toggleButtonState(inputList, buttonElement)
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement, inputElement.validationMessage)
@@ -211,16 +211,9 @@ const enableValidation = () => {
   })
 }
 
-editButton.addEventListener("click", () => { 
-  saveName()
-  saveProfession()
-  openPopup(popupName)
-})
+saveName()
 
-addButton.addEventListener("click", () => {
-  toggleButtonState(Array.from(popupCard.querySelectorAll(".popup__form")), popupSaveCardButton)
-  openPopup(popupCard)
-})
+saveProfession()
 
 enableValidation()
 

@@ -44,20 +44,21 @@ const initialCards = [
     }    
 ]
 
-escapePressed = (popup, evt) => {
+escapePressed = (evt) => {
   if (evt.key === "Escape") {
-    closePopup(popup)
+    const popupActive = document.querySelector(".popup_opened")
+    closePopup(popupActive)
   }
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened")
-  popup.removeEventListener("keydown", escapePressed)
+  document.removeEventListener("keydown", escapePressed)
 }
 
 function openPopup(popup) {
   popup.classList.add("popup_opened")
-  document.addEventListener("keydown", escapePressed.bind(null, popup))
+  document.addEventListener("keydown", escapePressed)
 }
 
 

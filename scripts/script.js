@@ -71,36 +71,69 @@ const filledTable = () => {
         emptyTitle.classList.remove("elements__empty_active")
 }
 
-const addCard = (link,name) => {
-        const template = document.querySelector("#elements__template").content
-        const cardElement = template.querySelector(".elements__card").cloneNode(true)
-        const cardPicture = cardElement.querySelector(".elements__picture")
-        cardPicture.src = link
-        cardPicture.alt = name
-        cardElement.querySelector(".elements__title").textContent = name
-        const likeButton = cardElement.querySelector(".elements__like-button")
-        likeButton.addEventListener("click", () => {
-          likeButton.classList.toggle("elements__like-button_active")
-        })
-        const trashButton = cardElement.querySelector(".elements__trash")
-        trashButton.addEventListener("click", () => {
-          cardElement.remove()
-          if (document.querySelectorAll(".elements__title").length === 0) {
-              emptyTable()
-          }
-        })
-        cardPicture.addEventListener("click", (evt) => {
-          popupPicture.src = link
-          popupPictureTitle.textContent = name
-          popupPicture.alt = name
-          openPopup(popupPicContainer)
-        }) 
-        return cardElement
+class Card {
+        constructor(link, name, template) {
+          this._link = link
+          this._name = name
+          this._template = template
+        }
+
+        _getTemplate() {
+          const template = document.querySelector(this._template).content
+          const cardEmpty = template.querySelector(".elements__card").cloneNode(true)
+          cardEmpty.querySelector(".elements__title").textContent = this._name
+
+          return cardEmpty
+        }
+
+        _getPicture() {
+          const cardPicture = this._element.querySelector(".elements__picture")
+          cardPicture.src = this._link
+          cardPicture.alt = this._name
+
+          return cardPicture
+        }
+
+        _handleLikeButton() {
+          const likeButton = this._element.querySelector(".elements__like-button")
+          likeButton.addEventListener("click", () => {
+            likeButton.classList.toggle("elements__like-button_active")
+          })
+        }
+
+        _handleTrashButton() {
+          const trashButton = this._element.querySelector(".elements__trash")
+          trashButton.addEventListener("click", () => {
+            this._element.remove()
+            if (document.querySelectorAll(".elements__title").length === 0) {
+                emptyTable()
+            }
+          })
+        }
+
+        _setEventListener() {
+          this._picture.addEventListener("click", (evt) => {
+            popupPicture.src = this._link
+            popupPictureTitle.textContent = this._name
+            popupPicture.alt = this._name
+            openPopup(popupPicContainer)
+          }) 
+        }
+
+        generateCard() {
+          this._element = this._getTemplate()
+          this._picture = this._getPicture()
+          this._handleLikeButton()
+          this._handleTrashButton()
+
+          return this._element
+        }
 }
 
 const fillPage = () => {
-    initialCards.forEach((card) => {
-        elementsTable.prepend(addCard(card.link, card.name))
+    initialCards.forEach((item) => {
+        const cardElement = new Card(item.link, item.name, "#elements__template")
+        elementsTable.prepend(cardElement.generateCard())
     })
 }
 
@@ -125,7 +158,8 @@ formEditElementName.addEventListener("submit", handleFormName)
 
 formAddCard.addEventListener("submit", (evt) => {
   evt.preventDefault()
-  elementsTable.prepend(addCard(cardLink.value, cardPlace.value))
+  const cardElement = new Card(cardLink.value, cardPlace.value, "#elements__template") 
+  elementsTable.prepend(cardElement.generateCard())
   formAddCard.reset()
   filledTable()
   closePopup(popupCard)

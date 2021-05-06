@@ -17,6 +17,19 @@ const formAddCard = document.querySelector(".popup__forms_content_card")
 const elementsTable = document.querySelector(".elements__table")
 const emptyTitle = document.querySelector(".elements__empty")
 
+export {popupPicture, popupPictureTitle, popupPicContainer, openPopup}
+
+import FormValidation from "./FormValidator.js"
+import Card from "./Card.js"
+
+const selectors = {
+  inputSelector: ".popup__form",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_inactive",
+  inputErrorClass: "popup__form_invalid",
+  errorClass: "popup__error_active"
+}
+
 const initialCards = [
     {
       name: "Байкал",
@@ -44,7 +57,7 @@ const initialCards = [
     }    
 ]
 
-escapePressed = (evt) => {
+const escapePressed = (evt) => {
   if (evt.key === "Escape") {
     const popupActive = document.querySelector(".popup_opened")
     closePopup(popupActive)
@@ -61,73 +74,12 @@ function openPopup(popup) {
   document.addEventListener("keydown", escapePressed)
 }
 
-
-
 const emptyTable = () => {
         emptyTitle.classList.add("elements__empty_active")
 }
 
 const filledTable = () => {
         emptyTitle.classList.remove("elements__empty_active")
-}
-
-class Card {
-        constructor(link, name, template) {
-          this._link = link
-          this._name = name
-          this._template = template
-        }
-
-        _getTemplate() {
-          const template = document.querySelector(this._template).content
-          const cardEmpty = template.querySelector(".elements__card").cloneNode(true)
-          cardEmpty.querySelector(".elements__title").textContent = this._name
-
-          return cardEmpty
-        }
-
-        _getPicture() {
-          const cardPicture = this._element.querySelector(".elements__picture")
-          cardPicture.src = this._link
-          cardPicture.alt = this._name
-
-          return cardPicture
-        }
-
-        _handleLikeButton() {
-          const likeButton = this._element.querySelector(".elements__like-button")
-          likeButton.addEventListener("click", () => {
-            likeButton.classList.toggle("elements__like-button_active")
-          })
-        }
-
-        _handleTrashButton() {
-          const trashButton = this._element.querySelector(".elements__trash")
-          trashButton.addEventListener("click", () => {
-            this._element.remove()
-            if (document.querySelectorAll(".elements__title").length === 0) {
-                emptyTable()
-            }
-          })
-        }
-
-        _setEventListener() {
-          this._picture.addEventListener("click", (evt) => {
-            popupPicture.src = this._link
-            popupPictureTitle.textContent = this._name
-            popupPicture.alt = this._name
-            openPopup(popupPicContainer)
-          }) 
-        }
-
-        generateCard() {
-          this._element = this._getTemplate()
-          this._picture = this._getPicture()
-          this._handleLikeButton()
-          this._handleTrashButton()
-
-          return this._element
-        }
 }
 
 const fillPage = () => {
@@ -176,4 +128,12 @@ travelerNameEdit.value = travelerName.textContent
 travelerProfessionEdit.value = travelerProfession.textContent
 
 fillPage()
+
+const validateName = new FormValidation(selectors, ".popup__forms_content_name")
+
+const validateCard = new FormValidation(selectors, ".popup__forms_content_card")
+
+validateName.enableValidation()
+
+validateCard.enableValidation()
 

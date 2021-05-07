@@ -42,7 +42,11 @@ export default class FormValidation {
     }
   }
 
-  _inputEvent = (formElement, inputElement, inputList, buttonElement) => {
+  _inputEvent = (evt) => {
+    const formElement = document.querySelector(this._form)
+    const inputList = Array.from(formElement.querySelectorAll(this._selectors.inputSelector))
+    const buttonElement = formElement.querySelector(this._selectors.submitButtonSelector)
+    const inputElement = evt.target
     this._checkInputValidity(formElement, inputElement)
     this._toggleButtonState(inputList, buttonElement)
   }
@@ -52,7 +56,7 @@ export default class FormValidation {
     const buttonElement = formElement.querySelector(this._selectors.submitButtonSelector)
     this._toggleButtonState(inputList, buttonElement)
     inputList.forEach((inputElement) => {
-      inputElement.addEventListener("input", this._inputEvent.bind(undefined, formElement, inputElement, inputList, buttonElement))
+      inputElement.addEventListener("input", this._inputEvent)
     })
   }
   

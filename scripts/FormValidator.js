@@ -41,16 +41,18 @@ export default class FormValidation {
       this._hideInputError(formElement, inputElement)
     }
   }
+
+  _inputEvent = (formElement, inputElement, inputList, buttonElement) => {
+    this._checkInputValidity(formElement, inputElement)
+    this._toggleButtonState(inputList, buttonElement)
+  }
   
   _setEventListeners(formElement) {
     const inputList = Array.from(formElement.querySelectorAll(this._selectors.inputSelector))
     const buttonElement = formElement.querySelector(this._selectors.submitButtonSelector)
     this._toggleButtonState(inputList, buttonElement)
     inputList.forEach((inputElement) => {
-      inputElement.addEventListener("input", () => {
-        this._checkInputValidity(formElement, inputElement)
-        this._toggleButtonState(inputList, buttonElement)
-      })
+      inputElement.addEventListener("input", this._inputEvent.bind(undefined, formElement, inputElement, inputList, buttonElement))
     })
   }
   

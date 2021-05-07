@@ -71,19 +71,23 @@ function handleFormName (evt) {
     closePopup(popupName)
 }
 
-editButton.addEventListener("click", () => { 
+const handleEditButton = () => { 
   travelerNameEdit.value = travelerName.textContent
   travelerProfessionEdit.value = travelerProfession.textContent
   openPopup(popupName)
-})
+}
 
-addButton.addEventListener("click", () => {
+editButton.addEventListener("click", handleEditButton)
+
+const openAddPopup = () => {
   openPopup(popupCard)
-})
+}
+
+addButton.addEventListener("click", openAddPopup)
 
 formEditElementName.addEventListener("submit", handleFormName)
 
-formAddCard.addEventListener("submit", (evt) => {
+const addCardSubmit = (evt) => {
   evt.preventDefault()
   const cardElement = new Card(cardLink.value, cardPlace.value, "#elements__template") 
   elementsTable.prepend(cardElement.generateCard())
@@ -91,13 +95,17 @@ formAddCard.addEventListener("submit", (evt) => {
   filledTable()
   closePopup(popupCard)
   addCardButton.classList.add("popup__save-button_inactive")
-})
+}
 
-popups.forEach((popup) => {popup.addEventListener("click", (evt) =>{
-    if (evt.target === evt.currentTarget || evt.target.classList.contains("popup__exit")) {
-        closePopup(evt.target.closest(".popup"))
-    }
-})})
+formAddCard.addEventListener("submit", addCardSubmit)
+
+const popupBackgroundClick = (evt) =>{
+  if (evt.target === evt.currentTarget || evt.target.classList.contains("popup__exit")) {
+      closePopup(evt.target.closest(".popup"))
+  }
+}
+
+popups.forEach((popup) => {popup.addEventListener("click", popupBackgroundClick)})
 
 travelerNameEdit.value = travelerName.textContent
 

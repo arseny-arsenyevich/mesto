@@ -23,11 +23,13 @@ export default class Card {
       return cardPicture
     }
 
+    _like = (evt) => {
+      evt.target.classList.toggle("elements__like-button_active")
+    }
+
     _handleLikeButton() {
       const likeButton = this._element.querySelector(".elements__like-button")
-      likeButton.addEventListener("click", () => {
-        likeButton.classList.toggle("elements__like-button_active")
-      })
+      likeButton.addEventListener("click", this._like)
     }
 
     _deleteCard = () => {
@@ -42,19 +44,21 @@ export default class Card {
       trashButton.addEventListener("click", this._deleteCard)
     }
 
-    _setEventListener() {
-      this._picture.addEventListener("click", (evt) => {
-        popupPicture.src = this._link
-        popupPictureTitle.textContent = this._name
-        popupPicture.alt = this._name
-        openPopup(popupPicContainer)
-      }) 
+    _setEventListener = (evt) => {
+      popupPicture.src = this._link
+      popupPictureTitle.textContent = this._name
+      popupPicture.alt = this._name
+      openPopup(popupPicContainer)
+    }
+
+    _handleClickPicture() {
+      this._picture.addEventListener("click", this._setEventListener) 
     }
 
     generateCard() {
       this._element = this._getTemplate()
       this._picture = this._getPicture()
-      this._setEventListener()
+      this._handleClickPicture()
       this._handleLikeButton()
       this._handleTrashButton()
 

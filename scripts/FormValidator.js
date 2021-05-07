@@ -27,8 +27,10 @@ export default class FormValidation {
   _toggleButtonState(inputList, buttonElement) {
     if (this._hasInvalidInput(inputList)) {
       buttonElement.classList.add(this._selectors.inactiveButtonClass)
+      buttonElement.disabled = true
     } else {
       buttonElement.classList.remove(this._selectors.inactiveButtonClass)
+      buttonElement.disabled = false
     }
   }
   

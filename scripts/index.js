@@ -1,8 +1,13 @@
+import FormValidation from "./FormValidator.js"
+import Card from "./Card.js"
+import {initialCards} from "./initialCards.js"
+
 const editButton = document.querySelector(".profile__edit-button")
 const addButton = document.querySelector(".profile__add-button")
 const popups = Array.from(document.querySelectorAll(".popup"))
 const popupName = document.querySelector(".popup_content_name")
 const popupCard = document.querySelector(".popup_content_card")
+const addCardButton = popupCard.querySelector(".popup__save-button")
 const popupPicContainer = document.querySelector(".popup_content_picture")
 const popupPicture = popupPicContainer.querySelector(".popup__picture")
 const popupPictureTitle = popupPicContainer.querySelector(".popup__picture-title")
@@ -17,10 +22,7 @@ const formAddCard = document.querySelector(".popup__forms_content_card")
 const elementsTable = document.querySelector(".elements__table")
 const emptyTitle = document.querySelector(".elements__empty")
 
-export {popupPicture, popupPictureTitle, popupPicContainer, openPopup}
-
-import FormValidation from "./FormValidator.js"
-import Card from "./Card.js"
+export {popupPicture, popupPictureTitle, popupPicContainer, openPopup, emptyTable}
 
 const selectors = {
   inputSelector: ".popup__form",
@@ -29,33 +31,6 @@ const selectors = {
   inputErrorClass: "popup__form_invalid",
   errorClass: "popup__error_active"
 }
-
-const initialCards = [
-    {
-      name: "Байкал",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
-    },
-    {
-      name: "Холмогорский район",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg"
-    },
-    {
-      name: "Камчатка",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg"
-    },
-    {
-      name: "Иваново",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg"
-    },
-    {
-      name: "Челябинская область",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg"
-    },
-    {
-      name: "Архыз",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
-    }    
-]
 
 const escapePressed = (evt) => {
   if (evt.key === "Escape") {
@@ -115,6 +90,7 @@ formAddCard.addEventListener("submit", (evt) => {
   formAddCard.reset()
   filledTable()
   closePopup(popupCard)
+  addCardButton.classList.add("popup__save-button_inactive")
 })
 
 popups.forEach((popup) => {popup.addEventListener("click", (evt) =>{

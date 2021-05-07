@@ -1,4 +1,4 @@
-import {popupPicture, popupPictureTitle, popupPicContainer, openPopup} from "./index.js"
+import {popupPicture, popupPictureTitle, popupPicContainer, openPopup, emptyTable} from "./index.js"
 
 export default class Card {
     constructor(link, name, template) {
@@ -30,14 +30,16 @@ export default class Card {
       })
     }
 
+    _deleteCard = () => {
+      this._element.remove()
+      if (document.querySelectorAll(".elements__title").length === 0) {
+          emptyTable()
+      }
+    }
+
     _handleTrashButton() {
       const trashButton = this._element.querySelector(".elements__trash")
-      trashButton.addEventListener("click", () => {
-        this._element.remove()
-        if (document.querySelectorAll(".elements__title").length === 0) {
-            emptyTable()
-        }
-      })
+      trashButton.addEventListener("click", this._deleteCard)
     }
 
     _setEventListener() {

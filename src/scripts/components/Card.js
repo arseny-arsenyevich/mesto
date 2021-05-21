@@ -1,11 +1,10 @@
-import {emptyTable} from "../../index.js"
-
 export default class Card {
-  constructor(link, name, template, handleCardClick) {
-    this._link = link
-    this._name = name
+  constructor(cardData, template, handleCardClick, showEmptyTableTitle) {
+    this._link = cardData.link
+    this._name = cardData.name
     this._template = template
     this._handleCardClick = handleCardClick
+    this._showEmptyTableTitle = showEmptyTableTitle
   }
 
   _getTemplate() {
@@ -35,7 +34,7 @@ export default class Card {
     const trashButton = this._element.querySelector(".elements__trash")
     trashButton.addEventListener("click", () => {
       this._element.remove()
-      if (document.querySelectorAll(".elements__title").length === 0) emptyTable()
+      if (document.querySelectorAll(".elements__title").length === 0) this._showEmptyTableTitle()
     })
   }
 

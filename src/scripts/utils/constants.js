@@ -35,8 +35,6 @@ export const selectors = {
 
 export const editButton = document.querySelector(".profile__edit-button")
 export const addButton = document.querySelector(".profile__add-button")
-export const popupPicture = document.querySelector(".popup__picture")
-export const popupPictureTitle = document.querySelector(".popup__picture-title")
 export const travelerNameEdit = document.querySelector(".popup__form_input_name")
 export const travelerProfessionEdit = document.querySelector(".popup__form_input_profession")
 export const elementsTable = ".elements__table"

@@ -85,7 +85,7 @@ addButton.addEventListener("click", () => {
 cardList.renderItems()
 
 if (document.querySelectorAll(".elements__title").length === 0) {
-  emptyTable()
+  showEmptyTableTitle()
 }
 
 popupCard.setEventListeners()

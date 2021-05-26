@@ -2,7 +2,7 @@
     height: 18px;
     width: 18px;
     cursor: pointer;
-    transition: opacity 1s ease;
+    transition: opacity .5s ease;
     margin: 9px 0 0;
     background-image: url("../../../images/Edit_Button.svg");
     background-color: transparent;

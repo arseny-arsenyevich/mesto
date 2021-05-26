@@ -1,6 +1,4 @@
-<!-- НЕ ПРОВЕРЯЙТЕ Я СЛУЧАЙНО НАЖАЛ -->
-
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +17,10 @@
 
         <main class="main">
             <section class="profile profile_position_center">
-                <img class="profile__picture" src="<%=require('./images/traveler.jpg')%>" alt="ФОтография исследователя">
+                <div class = "profile__picture-edit">
+                    <img class="profile__picture" src="<%=require('./images/traveler.jpg')%>" alt="Фотография исследователя">
+                    <button class="profile__picture-edit-button" type="button"></button>
+                </div>
                 <div class="profile__name-box">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
                     <button class="profile__edit-button" type="button"></button>
@@ -81,6 +82,32 @@
                 </div>
             </div>
 
+            <div class="popup popup_content_avatar">
+                <div class="popup__container popup__container_position_center">
+                    <button class="popup__exit popup__exit_content_card" type="button"></button>
+                    <h2 class="popup__heading">Обновить аватар</h2>
+                    <form class="popup__forms popup__forms_content_avatar" name="forms">
+                        <fieldset class="popup__input-container">
+                            <label class="popup__field">
+                                <input type="url" class="popup__form popup__form_input_link" name="avatar" id="form-avatar" placeholder="Ссылка на картинку" required>
+                                <span class="popup__error popup__error_type_form-link"></span>
+                            </label>
+                        </fieldset>
+                        <button type="submit" class="popup__save-button popup__save-button_content_card">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="popup popup_content_delete-card">
+                <div class="popup__container popup__container_position_center">
+                    <button class="popup__exit popup__exit_content_card" type="button"></button>
+                    <h2 class="popup__heading">Вы уверены?</h2>
+                    <form class="popup__forms popup__forms_content_delete-card" name="forms">
+                        <button type="submit" class="popup__save-button popup__save-button_content_delete-card">Да</button>
+                    </form>
+                </div>
+            </div>
+
             <div class="popup popup_content_picture">
                 <div class="popup__pic-container">
                     <button class="popup__exit popup__exit_content_picture" type="button"></button>
@@ -99,10 +126,13 @@
             </div>
             <div class="elements__text-area">
                 <h2 class="elements__title">sfafasfsf</h2>
-                <button class="elements__like-button" type="button"></button>
+                <div class="elements__like">
+                    <button class="elements__like-button" type="button"></button>
+                    <p class="elements__like-counter">0</p>
+                </div>
             </div>
         </li>
     </template>
     
 </body>
-</html> -->
+</html>

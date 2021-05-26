@@ -5,7 +5,7 @@ export default class FormValidation {
     this._selectors = restSelectors
     this._formElement = document.querySelector(form)
     this._inputList = Array.from(this._formElement.querySelectorAll(inputSelector))
-    this._buttonElement = this._formElement.querySelector(submitButtonSelector)
+    this.buttonElement = this._formElement.querySelector(submitButtonSelector)
   }
 
   _showInputError = (inputElement) => {
@@ -29,13 +29,13 @@ export default class FormValidation {
   }
 
   _setInActiveButton() {
-    this._buttonElement.classList.add(this._selectors.inactiveButtonClass)
-    this._buttonElement.disabled = true
+    this.buttonElement.classList.add(this._selectors.inactiveButtonClass)
+    this.buttonElement.disabled = true
   }
 
   _setActiveButton() {
-    this._buttonElement.classList.remove(this._selectors.inactiveButtonClass)
-    this._buttonElement.disabled = false
+    this.buttonElement.classList.remove(this._selectors.inactiveButtonClass)
+    this.buttonElement.disabled = false
   }
 
   _toggleButtonState() {

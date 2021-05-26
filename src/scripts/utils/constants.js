@@ -1,30 +1,3 @@
-export const initialCards = [
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg"
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg"
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg"
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg"
-  },
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
-  }    
-]
-
 export const selectors = {
   inputSelector: ".popup__form",
   submitButtonSelector: ".popup__save-button",
@@ -34,6 +7,8 @@ export const selectors = {
 }
 
 export const editButton = document.querySelector(".profile__edit-button")
+export const avatarPicture = document.querySelector(".profile__picture")
+export const editAvatarButton = document.querySelector(".profile__picture-edit-button")
 export const addButton = document.querySelector(".profile__add-button")
 export const travelerNameEdit = document.querySelector(".popup__form_input_name")
 export const travelerProfessionEdit = document.querySelector(".popup__form_input_profession")

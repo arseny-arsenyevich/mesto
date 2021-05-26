@@ -11,7 +11,7 @@
     background-color: transparent;
     cursor: pointer;
     outline: none;
-    transition: opacity 1s ease;
+    transition: opacity .5s ease;
 }
 
 .elements__trash:hover {

@@ -5,7 +5,7 @@
     height: 37px;
     width: 37px;
     cursor: pointer;
-    transition: opacity 1s ease;
+    transition: opacity .5s ease;
     background-image: url("../../../images/Close_Icon.svg");
     border: 0;
     background-color: transparent;

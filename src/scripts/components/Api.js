@@ -4,54 +4,46 @@ export default class Api {
         this._headers = headers
     }  
 
+    _checkResponse(res) {
+        return res.ok ? res.json() : Promise.reject(`${res.status}`)
+    }
+
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {
             method: "GET",
             headers: this._headers,
-        }).then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
-        .catch(err => console.log(`Ошибка: ${err}`))
+        }).then(this._checkResponse)
     }
 
     getCards() {
         return fetch(`${this._url}/cards`, {
             method: "GET",
             headers: this._headers,
-        }).then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
-        .catch(err => console.log(`Ошибка: ${err}`))
+        }).then(this._checkResponse)
     }   
     
-    redactProfile({name, about}, buttonElement) {
-        const buttonInitText = buttonElement.textContent
-        buttonElement.textContent = "Сохранение..."
-        fetch(`${this._url}/users/me`, {
+    redactProfile({name, about}) {
+        return fetch(`${this._url}/users/me`, {
             method: "PATCH",
             headers: this._headers,
             body: JSON.stringify({
                 name: `${name}`,
                 about: `${about}`
             })
-            }).then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
-            .catch(err => console.log(`Ошибка: ${err}`))
-            .finally(() => buttonElement.textContent = buttonInitText)
+            }).then(this._checkResponse)
     }
 
-    redactAvatar({avatar}, buttonElement) {
-        const buttonInitText = buttonElement.textContent
-        buttonElement.textContent = "Сохранение..."
-        fetch(`${this._url}/users/me/avatar`, {
+    redactAvatar({avatar}) {
+        return fetch(`${this._url}/users/me/avatar`, {
             method: "PATCH",
             headers: this._headers,
             body: JSON.stringify({
                 avatar: `${avatar}`,
             })
-            }).then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
-            .catch(err => console.log(`Ошибка: ${err}`))
-            .finally(() => buttonElement.textContent = buttonInitText)
+            }).then(this._checkResponse)
     }
 
-    addCard({name, link}, buttonElement) {
-        const buttonInitText = buttonElement.textContent
-        buttonElement.textContent = "Сохранение..."
+    addCard({name, link}) {
         return fetch(`${this._url}/cards`, {
             method: "POST",
             headers: this._headers,
@@ -59,35 +51,27 @@ export default class Api {
                 name: `${name}`,
                 link: `${link}`
             })
-            }).then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
-            .catch(err => console.log(`Ошибка: ${err}`))
-            .finally(() => buttonElement.textContent = buttonInitText)
+            }).then(this._checkResponse)
     }
 
-    deleteCard(cardId, buttonElement) {
-        const buttonInitText = buttonElement.textContent
-        buttonElement.textContent = "Сохранение..."
+    deleteCard(cardId) {
         return fetch(`${this._url}/cards/${cardId}`, {
             method: "DELETE",
             headers: this._headers,
-            }).then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
-            .catch(err => console.log(`Ошибка: ${err}`))
-            .finally(() => buttonElement.textContent = buttonInitText)
+            }).then(this._checkResponse)
     }
 
     handleAddLike(cardId) {
         return fetch(`${this._url}/cards/likes/${cardId}`, {
             method: "PUT",
             headers: this._headers,
-            }).then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
-            .catch(err => console.log(`Ошибка: ${err}`))
+            }).then(this._checkResponse)
     }
 
     handleRemoveLike(cardId) {
         return fetch(`${this._url}/cards/likes/${cardId}`, {
             method: "DELETE",
             headers: this._headers,
-            }).then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
-            .catch(err => console.log(`Ошибка: ${err}`))
+            }).then(this._checkResponse)
     }
 }

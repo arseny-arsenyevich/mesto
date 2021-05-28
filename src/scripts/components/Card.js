@@ -1,12 +1,11 @@
 export default class Card {
   constructor({link, name, likes, owner, _id},
-              currentUserId, 
-              template, 
-              handleCardClick,
-              {handleTrashButton},
-              handleAddLike,
-              handleRemoveLike, 
-              showEmptyTableTitle) {
+      currentUserId, 
+      template, 
+      handleCardClick,
+      {handleTrashButton},
+      handleAddLike,
+      handleRemoveLike) {
     this._link = link
     this._name = name
     this.likes = likes
@@ -20,7 +19,6 @@ export default class Card {
     this._handleTrashButton = handleTrashButton
     this._handleAddLike = handleAddLike
     this._handleRemoveLike = handleRemoveLike
-    this._showEmptyTableTitle = showEmptyTableTitle
   }
 
   _getTemplate() {
@@ -39,22 +37,30 @@ export default class Card {
     return cardPicture
   }
 
+  _handleLike(res) {
+    this.likes = res.likes
+    this._likeCounter.textContent = this.likes.length
+    this._isLiked = !this._isLiked
+  }
+
   _toggleLikeButton() {
-    const likeCounter = this._element.querySelector(".elements__like-counter")
-    likeCounter.textContent = this.likes.length
+    this._likeCounter = this._element.querySelector(".elements__like-counter")
+    this._likeCounter.textContent = this.likes.length
     const likeButton = this._element.querySelector(".elements__like-button")
     if (this._isLiked) {likeButton.classList.add("elements__like-button_active")}
     likeButton.addEventListener("click", (evt) => {
       if (this._isLiked) {
-        likeCounter.textContent = parseInt(likeCounter.textContent, 10) - 1
-        evt.target.classList.remove("elements__like-button_active")
-        this._handleRemoveLike(this._cardId)
+        this._handleRemoveLike(this._cardId).then((res) => {
+          this._handleLike(res)
+          evt.target.classList.remove("elements__like-button_active")
+        }).catch(err => console.log(`Ошибка: ${err}`))
       } else {
-        likeCounter.textContent = parseInt(likeCounter.textContent, 10) + 1
-        evt.target.classList.add("elements__like-button_active")
-        this._handleAddLike(this._cardId)
+        this._handleAddLike(this._cardId).then((res) => {
+          this._handleLike(res)
+          evt.target.classList.add("elements__like-button_active")
+        }).catch(err => console.log(`Ошибка: ${err}`))
       }   
-      this._isLiked = !this._isLiked   
+        
     })
   }
 
@@ -63,7 +69,7 @@ export default class Card {
     if (this._ownerId === this._currentUserId) {
       trashButton.addEventListener("click", () => {
         this._handleTrashButton(this._element, this._cardId)
-        if (document.querySelectorAll(".elements__title").length === 0) this._showEmptyTableTitle()
+        
       })
     } else {
       trashButton.style.display = "none"

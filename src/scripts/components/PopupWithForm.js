@@ -1,9 +1,11 @@
 import Popup from "./Popup.js"
 
 export default class PopupWithForm extends Popup {
-    constructor (popupSelector, {handleFormSubmit}) {
+    constructor (popupSelector, buttonElement, {handleFormSubmit}) {
         super(popupSelector)
         this._handleFormSubmit = handleFormSubmit
+        this.buttonElement = buttonElement
+        this.buttonInitText = this.buttonElement.textContent
     }
 
     _getInputValues () {
@@ -19,9 +21,14 @@ export default class PopupWithForm extends Popup {
         super.close()
     }
 
+    buttonSetInitText() {
+        this.buttonElement.textContent = this.buttonInitText
+    }
+
     setEventListeners() {
         super.setEventListeners()
         this._popup.addEventListener("submit", (evt) =>{
+            this.buttonElement.textContent = "Сохранение..."
             evt.preventDefault()
             this._handleFormSubmit(this._getInputValues())
         })

@@ -10,7 +10,6 @@ import Api from "../scripts/components/Api.js"
 import {
   selectors, 
   editButton, 
-  avatarPicture,
   editAvatarButton,
   addButton, 
   travelerNameEdit,
@@ -41,62 +40,19 @@ const api = new Api({
   }
 })
 
-const traveler = new UserInfo ({userNameSelector: ".profile__name",
-                                aboutSelector: ".profile__profession",
-                                avatarSelector: ".profile__picture"})
-
-const popupName = new PopupWithForm (".popup_content_name", {
-  handleFormSubmit:  ({name, about}) => {
-      traveler.setUserInfo({name, about})
-      api.redactProfile({name, about}, validateName.buttonElement)
-      popupName.close()
-    }
-  }
-)
-
-const popupCard = new PopupWithForm (".popup_content_card", {
-  handleFormSubmit:  (cardData) => {
-    api.addCard(cardData, validateCard.buttonElement).then((data) => {
-      const cardItem = new Card({likes: [], ...data},
-        myId,
-        "#elements__template",
-        handleCardClick,
-        {
-          handleTrashButton: (card, cardId) => {
-            popupDeleteCard.open(card, cardId)
-          }
-        },
-        api.handleAddLike.bind(api),
-        api.handleRemoveLike.bind(api),
-        showEmptyTableTitle)
-        cardList.prependItem(cardItem.generateCard())
-        popupCard.close()
-    })
-    removeEmptyTableTitle()
-    validateCard.restartValidation()
-    }
-  }
-)
-
-const popupAvatar = new PopupWithForm (".popup_content_avatar", {
-  handleFormSubmit:  ({avatar}) => {
-      traveler.setUserInfo({avatar})
-      api.redactAvatar({avatar}, validateAvatar.buttonElement)
-      validateAvatar.restartValidation()
-      popupAvatar.close()
-    }
-  }
-)
-
-const popupDeleteCard = new PopupWithDelete (".popup_content_delete-card", {
-  handleFormSubmit: (card, cardId) => {
-    card.remove()
-    api.deleteCard(cardId, validateDelete.buttonElement)
-    popupDeleteCard.close()
-  }
-})
-
-const popupPicContainer = new PopupWithImage (".popup_content_picture")
+const createCard = (cardData) => {
+  return new Card({likes: [], ...cardData},
+    myId,
+    "#elements__template",
+    handleCardClick,
+    {
+      handleTrashButton: (card, cardId) => {
+        popupDeleteCard.open(card, cardId)
+      }
+    },
+    api.handleAddLike.bind(api),
+    api.handleRemoveLike.bind(api))
+}
 
 const validateName = new FormValidation(selectors, ".popup__forms_content_name")
 
@@ -106,21 +62,79 @@ const validateAvatar = new FormValidation(selectors, ".popup__forms_content_avat
 
 const validateDelete = new FormValidation(selectors, ".popup__forms_content_delete-card")
 
+const traveler = new UserInfo ({
+  userNameSelector: ".profile__name",
+  aboutSelector: ".profile__profession",
+  avatarSelector: ".profile__picture"
+})
+
+const popupName = new PopupWithForm (
+  ".popup_content_name",
+  validateName.buttonElement, {
+  handleFormSubmit:  ({name, about}) => {
+      api.redactProfile({name, about})
+        .then(({name, about}) => {
+          traveler.setUserInfo({name, about})
+          popupName.close()
+      })
+        .catch(err => console.log(`Ошибка: ${err}`))
+        .finally(() => popupName.buttonSetInitText())
+    }
+  }
+)
+
+const popupCard = new PopupWithForm (
+  ".popup_content_card",
+  validateCard.buttonElement, {
+  handleFormSubmit:  (cardData) => {
+    api.addCard(cardData).then((data) => {
+        const cardItem = createCard(data)
+        cardList.addItem(cardItem.generateCard())
+        popupCard.close()
+    })
+      .catch(err => console.log(`Ошибка: ${err}`))
+      .finally(() => popupCard.buttonSetInitText())
+    removeEmptyTableTitle()
+    validateCard.restartValidation()
+    }
+  }
+)
+
+const popupAvatar = new PopupWithForm (
+  ".popup_content_avatar",
+  validateAvatar.buttonElement, {
+  handleFormSubmit:  ({avatar}) => {
+      api.redactAvatar({avatar})
+        .then(({avatar}) => {
+          traveler.setUserInfo({avatar})
+          popupAvatar.close()
+        })
+        .catch(err => console.log(`Ошибка: ${err}`))
+        .finally(() => popupAvatar.buttonSetInitText())
+      validateAvatar.restartValidation()
+    }
+  }
+)
+
+const popupDeleteCard = new PopupWithDelete (
+  ".popup_content_delete-card",
+  validateDelete.buttonElement, {
+  handleFormSubmit: (card, cardId) => {
+    api.deleteCard(cardId).then(() => {
+      card.remove()
+      if (document.querySelectorAll(".elements__title").length === 0) showEmptyTableTitle()
+      popupDeleteCard.close()
+    })
+    .catch(err => console.log(`Ошибка: ${err}`))
+    .finally(() => popupDeleteCard.buttonSetInitText())
+  }
+})
+
+const popupPicContainer = new PopupWithImage (".popup_content_picture")
+
 const cardList = new Section ({
-  renderer: (cardData) =>{
-    const cardItem = new Card(cardData,
-      myId, 
-      "#elements__template",
-      handleCardClick,
-      {
-        handleTrashButton: (card, cardId) => {
-          popupDeleteCard.open(card, cardId)
-        }
-      },
-      api.handleAddLike.bind(api),
-      api.handleRemoveLike.bind(api),
-      showEmptyTableTitle)
-    cardList.appendItem(cardItem.generateCard())
+  renderer: (cardItem) =>{
+    cardList.addItem(cardItem.generateCard())
   }
 }, elementsTable)
 
@@ -138,19 +152,20 @@ addButton.addEventListener("click", () => {
   popupCard.open()
 })
 
-editAvatarButton.addEventListener("click", popupAvatar.open.bind(popupAvatar))
-
-api.getUserInfo().then(({name, about, avatar, _id}) => {
-  traveler.setUserInfo({name, about, avatar})
-  myId = _id
+editAvatarButton.addEventListener("click", () => {
+  validateAvatar.restartValidation()
+  popupAvatar.open()
 })
 
-api.getCards().then((cards) => {
-  cardList.renderItems(cards)
-  if (document.querySelectorAll(".elements__title").length === 0) {
-    showEmptyTableTitle()
-  }
-})
+Promise.all([api.getUserInfo(), api.getCards()])
+    .then((res) => {
+      traveler.setUserInfo(res[0])
+      myId = res[0]._id
+
+      cardList.renderItems(res[1].map(card => createCard(card)).reverse())
+      if (document.querySelectorAll(".elements__title").length === 0) showEmptyTableTitle()
+    })
+    .catch(err => console.log(`Ошибка: ${err}`))
 
 popupCard.setEventListeners()
 

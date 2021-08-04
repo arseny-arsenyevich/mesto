@@ -3,8 +3,8 @@
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    padding: 13px 81px;
-    margin: 44px auto 32px;
+    padding: 12px 80px;
+    margin: 45px auto 32px;
     transition: opacity .5s ease;
     background-color: black;
     border: 0;
@@ -20,7 +20,7 @@
         margin: 48px auto 36px;
         font-size: 18px;
         line-height: 22px;
-        padding: 13px 132px;
+        padding: 12px 132px;
     }
 }
 

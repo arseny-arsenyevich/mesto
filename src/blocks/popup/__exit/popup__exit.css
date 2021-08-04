@@ -1,9 +1,9 @@
 .popup__exit {
     position: absolute;
-    top: -51px;
-    left: 245px;
-    height: 37px;
-    width: 37px;
+    top: -50px;
+    right: 0px;
+    height: 36px;
+    width: 36px;
     cursor: pointer;
     transition: opacity .5s ease;
     background-image: url("../../../images/Close_Icon.svg");
@@ -19,9 +19,9 @@
 
 @media screen and (min-width: 1000px) {
     .popup__exit {
-        top: -47px;
-        left: 423px;
-        height: 54px;
-        width: 54px;
+        top: -50px;
+        right: -50px;
+        height: 50px;
+        width: 50px;
     }
 }

@@ -1,7 +1,7 @@
 .elements__card {
     position: relative;
     text-decoration: none;
-    background-color: #FFFFFF;
+    background-color: inherit;
     border-radius: 10px;
     overflow: hidden;
     width: 282px;

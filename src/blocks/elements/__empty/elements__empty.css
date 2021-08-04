@@ -14,7 +14,7 @@
     }
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 1000px) {
     .elements__empty {
         margin: 200px 20px;
         font-size: 60px;
